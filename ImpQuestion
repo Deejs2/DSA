@@ -1,0 +1,404 @@
+//Stack Implementation
+
+import java.util.ArrayList;
+
+class Stack {
+	private ArrayList<Integer> stack;
+	
+	public Stack(){
+		stack = new ArrayList<>();
+	}
+	public void push(int element){
+		stack.add(element);
+	}
+	
+	public int pop(){
+		if(!isEmpty()){
+			int elementRemoved = stack.remove(stack.size()-1);
+			return elementRemoved;
+		}else{
+			System.out.println("Stack is Empty cannot pop!");
+			return -1;
+		}
+	}
+	
+	public boolean isEmpty(){
+		return stack.isEmpty();
+	}
+	
+	public void display(){
+		System.out.println("Stack Contents: ");
+		for(int i = stack.size()-1; i>=0; i--){
+			System.out.println(stack.get(i));
+		}
+	}
+}
+
+public class StackMain{
+	public static void main(String[] args){
+		Stack stack = new Stack();
+		
+		stack.push(10);
+		stack.display();
+		System.out.println("Popped element : "+ stack.pop());
+		stack.display();
+	}
+}
+
+//Queue Implementation
+import java.util.LinkedList;
+
+class Queue {
+    private LinkedList<Integer> queue;
+
+    public Queue() {
+        queue = new LinkedList<>();
+    }
+
+    public void enqueue(int element) {
+        queue.addLast(element);
+    }
+
+    public int dequeue() {
+        if (!isEmpty()) {
+            int removedElement = queue.removeFirst();
+            return removedElement;
+        } else {
+            System.out.println("Queue is empty. Cannot dequeue.");
+            return -1; // Return a default value indicating failure
+        }
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
+
+    public void display() {
+        System.out.println("Queue contents:");
+        for (int element : queue) {
+            System.out.println(element);
+        }
+    }
+}
+
+public class QueueMain {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+
+        // Enqueue elements into the queue
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        // Display the queue
+        queue.display();
+
+        // Dequeue elements from the queue
+        int dequeuedElement = queue.dequeue();
+        System.out.println("Dequeued element: " + dequeuedElement);
+
+        // Display the queue after dequeuing
+        queue.display();
+    }
+}
+
+//CircularQueue Implementation
+
+class CircularQueue {
+    private int maxSize;
+    private int[] queueArray;
+    private int front;
+    private int rear;
+    private int currentSize;
+
+    public CircularQueue(int size) {
+        maxSize = size;
+        queueArray = new int[maxSize];
+        front = 0;
+        rear = -1;
+        currentSize = 0;
+    }
+
+    public boolean isFull() {
+        return currentSize == maxSize;
+    }
+
+    public boolean isEmpty() {
+        return currentSize == 0;
+    }
+
+    public void enqueue(int element) {
+        if (!isFull()) {
+            rear = (rear + 1) % maxSize;
+            queueArray[rear] = element;
+            currentSize++;
+        } else {
+            System.out.println("Queue is full. Cannot enqueue.");
+        }
+    }
+
+    public int dequeue() {
+        if (!isEmpty()) {
+            int removedElement = queueArray[front];
+            front = (front + 1) % maxSize;
+            currentSize--;
+            return removedElement;
+        } else {
+            System.out.println("Queue is empty. Cannot dequeue.");
+            return -1; // Return a default value indicating failure
+        }
+    }
+
+    public void display() {
+        if (!isEmpty()) {
+            System.out.println("Circular Queue contents:");
+            int index = front;
+            for (int i = 0; i < currentSize; i++) {
+                System.out.println(queueArray[index]);
+                index = (index + 1) % maxSize;
+            }
+        } else {
+            System.out.println("Circular Queue is empty.");
+        }
+    }
+}
+
+public class CircularQueueMain {
+    public static void main(String[] args) {
+        CircularQueue circularQueue = new CircularQueue(5);
+
+        // Enqueue elements into the circular queue
+        circularQueue.enqueue(10);
+        circularQueue.enqueue(20);
+        circularQueue.enqueue(30);
+		circularQueue.enqueue(40);
+
+        // Display the circular queue
+        circularQueue.display();
+
+        // Dequeue elements from the circular queue
+        int dequeuedElement = circularQueue.dequeue();
+        System.out.println("Dequeued element: " + dequeuedElement);
+		circularQueue.dequeue();
+
+        // Display the circular queue after dequeuing
+        circularQueue.display();
+    }
+}
+
+
+//Linked list Implementation
+
+class LinkedListNode {
+    int data;
+    LinkedListNode next;
+
+    LinkedListNode(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+class LinkedList {
+    private LinkedListNode head;
+
+    LinkedList() {
+        head = null;
+    }
+
+    // Method to insert a new node at the beginning of the list
+    public void insertAtBeginning(int data) {
+        LinkedListNode newNode = new LinkedListNode(data);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    // Method to delete the first node from the list
+    public void deleteAtBeginning() {
+        if (head != null) {
+            head = head.next;
+        }
+    }
+
+    // Method to display the elements of the list
+    public void displayList() {
+        LinkedListNode current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+public class LinkedListMain {
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+
+        // Insert elements at the beginning
+        linkedList.insertAtBeginning(30);
+        linkedList.insertAtBeginning(20);
+        linkedList.insertAtBeginning(10);
+
+        System.out.println("Linked List after Insertion:");
+        linkedList.displayList();
+
+        // Delete elements from the beginning
+        linkedList.deleteAtBeginning();
+
+        System.out.println("Linked List after Deletion:");
+        linkedList.displayList();
+    }
+}
+
+//DoublyLinkedList Implementation
+
+class DoublyLinkedListNode {
+    int data;
+    DoublyLinkedListNode next;
+    DoublyLinkedListNode prev;
+
+    DoublyLinkedListNode(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class DoublyLinkedList {
+    private DoublyLinkedListNode head;
+    private DoublyLinkedListNode tail;
+
+    DoublyLinkedList() {
+        head = null;
+        tail = null;
+    }
+
+    // Method to insert a new node at the end of the list
+    public void insertAtEnd(int data) {
+        DoublyLinkedListNode newNode = new DoublyLinkedListNode(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.prev = tail;
+            tail.next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Method to delete the last node from the list
+    public void deleteAtEnd() {
+        if (tail != null) {
+            tail = tail.prev;
+            if (tail != null) {
+                tail.next = null;
+            } else {
+                head = null;
+            }
+        }
+    }
+
+    // Method to display the elements of the list
+    public void displayList() {
+        DoublyLinkedListNode current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+public class DoublyLinkedListMain {
+    public static void main(String[] args) {
+        DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
+
+        // Insert elements at the end
+        doublyLinkedList.insertAtEnd(10);
+        doublyLinkedList.insertAtEnd(20);
+        doublyLinkedList.insertAtEnd(30);
+
+        System.out.println("Doubly Linked List after Insertion:");
+        doublyLinkedList.displayList();
+
+        // Delete elements from the end
+        doublyLinkedList.deleteAtEnd();
+
+        System.out.println("Doubly Linked List after Deletion:");
+        doublyLinkedList.displayList();
+    }
+}
+
+//BinarySearch Implementation
+
+class BinarySearch {
+    public static int binarySearch(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            // Check if the target is present at the middle element
+            if (arr[mid] == target) {
+                return mid;
+            }
+
+            // If the target is greater, ignore the left half
+            if (arr[mid] < target) {
+                left = mid + 1;
+            }
+            // If the target is smaller, ignore the right half
+            else {
+                right = mid - 1;
+            }
+        }
+
+        // If the target is not found in the array
+        return -1;
+    }
+}
+public class BinarySearchMain {
+    public static void main(String[] args) {
+        int[] sortedArray = {10, 26, 38, 39, 47, 80};
+        int target =  47;
+        
+        int result = BinarySearch.binarySearch(sortedArray, target);
+        
+        if (result != -1) {
+            System.out.println("Target " + target + " found at index " + result);
+        } else {
+            System.out.println("Target " + target + " not found in the array");
+        }
+    }
+}
+
+//PrimeChecker Implementation using recursion
+
+class PrimeChecker {
+    public static boolean isPrime(int number, int divisor) {
+        if (number <= 1) {
+            return false; // Numbers less than or equal to 1 are not prime
+        }
+        if (divisor == 1) {
+            return true; // Base case: 1 is not a divisor, so the number is prime
+        }
+        if (number % divisor == 0) {
+            return false; // The number is divisible by a divisor other than 1 and itself, so it's not prime
+        }
+        return isPrime(number, divisor - 1); // Recursively check for divisors
+    }
+
+    public static boolean isPrime(int number) {
+        return isPrime(number, (int) Math.sqrt(number)); // Start checking divisors from 2 up to the square root of the number
+    }
+}
+public class PrimeCheckerMain {
+    public static void main(String[] args) {
+        int number = 17; // Change this to the number you want to check for primality
+
+        if (PrimeChecker.isPrime(number)) {
+            System.out.println(number + " is a prime number.");
+        } else {
+            System.out.println(number + " is not a prime number.");
+        }
+    }
+}
